@@ -40,6 +40,9 @@ import { updateProductRouter } from "./src/routes/products/updateProduct";
 import { addCommentRouter } from "./src/routes/comments/addComment";
 import { getCommentsRouter } from "./src/routes/comments/getComments";
 
+// Cart
+import { getCartRouter } from "./src/routes/cart/getCart";
+
 const app = express();
 app.use(express.json());
 app.use(cors());
@@ -71,6 +74,9 @@ const start = async (): Promise<void> => {
   // Comment routes
   app.use(addCommentRouter);
   app.use(getCommentsRouter);
+
+  // Cart
+  app.use(getCartRouter);
 
   // connect to db
   try {
