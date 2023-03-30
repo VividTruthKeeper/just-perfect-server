@@ -35,6 +35,7 @@ import { getProductsRouter } from "./src/routes/products/getProducts";
 import { addProductRouter } from "./src/routes/products/addProduct";
 import { deleteProductRouter } from "./src/routes/products/deleteProduct";
 import { updateProductRouter } from "./src/routes/products/updateProduct";
+import { productSearchRouter } from "./src/routes/products/searchProduct";
 
 // Comments
 import { addCommentRouter } from "./src/routes/comments/addComment";
@@ -72,6 +73,7 @@ const start = async (): Promise<void> => {
   app.use(addProductRouter);
   app.use(deleteProductRouter);
   app.use(updateProductRouter);
+  app.use(productSearchRouter);
 
   // Comment routes
   app.use(addCommentRouter);

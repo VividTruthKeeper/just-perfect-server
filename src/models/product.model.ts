@@ -35,4 +35,6 @@ const productSchema = new Schema(
   { timestamps: true, strictQuery: false }
 );
 
+productSchema.index({ name: "text", description: "text" });
+
 export default model<IProduct>("Product", productSchema);
