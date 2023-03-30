@@ -5,8 +5,14 @@ import fs from "fs";
 import path from "path";
 import { IComment } from "../models/comment.model";
 
-export const getAllProducts = async (): Promise<IProduct[]> => {
-  return await Product.find();
+export const getAllProducts = async (
+  page: any,
+  perPage: any
+): Promise<IProduct[]> => {
+  return await Product.find()
+    .skip((page - 1) * perPage)
+    .limit(perPage * 1)
+    .exec();
 };
 
 export const getProductById = async (id: string): Promise<IProduct | null> => {
