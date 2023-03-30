@@ -6,11 +6,13 @@ import { GenericError } from "../../errors/generic-error";
 import { modifyProductInCategory } from "../../services/category.service";
 import fs from "fs";
 import path from "path";
+import { adminAuth } from "../../middlewares/adminAuth";
 
 const router = express.Router();
 
 router.delete(
   "/api/products/delete",
+  adminAuth,
   [body("id").exists().withMessage("Product id must be provided")],
 
   async (req: Request, res: Response) => {

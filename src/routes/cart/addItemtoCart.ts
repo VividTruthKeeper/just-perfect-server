@@ -64,7 +64,7 @@ router.post(
       existingItem.price = existingItem.quantity * product.price;
     } else {
       // If the product is not already in the cart, add it as a new item
-      const newItem: CartItem = {
+      const newItem: any = {
         product: productId,
         quantity: quantity,
         price: product.price * quantity,

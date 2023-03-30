@@ -3,16 +3,13 @@ import { body, validationResult, param } from "express-validator";
 import { RequestValidationError } from "../../errors/request-validation-error";
 import { GenericError } from "../../errors/generic-error";
 import { updateProduct } from "../../services/product.service";
-import {
-  getCategoryById,
-  modifyProductInCategory,
-  updateCategory,
-} from "../../services/category.service";
+import { adminAuth } from "../../middlewares/adminAuth";
 
 const router = express.Router();
 
 router.put(
   "/api/products/update/:id",
+  adminAuth,
   [
     body("name").exists().withMessage("Product name must be provided"),
     body("description")

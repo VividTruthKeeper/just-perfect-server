@@ -1,10 +1,11 @@
 import express, { Request, Response } from "express";
 import { param } from "express-validator";
+import { adminAuth } from "../../middlewares/adminAuth";
 import { getCommentById, getComments } from "../../services/comment.service";
 
 const router = express.Router();
 
-router.get("/api/comments", async (req: Request, res: Response) => {
+router.get("/api/comments", adminAuth, async (req: Request, res: Response) => {
   res.status(200).send({
     status: "success",
     data: await getComments(),

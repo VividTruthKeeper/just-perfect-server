@@ -5,11 +5,13 @@ import { addProduct, deleteImages } from "../../services/product.service";
 import { upload } from "../../middlewares/upload";
 import { GenericError } from "../../errors/generic-error";
 import { modifyProductInCategory } from "../../services/category.service";
+import { adminAuth } from "../../middlewares/adminAuth";
 
 const router = express.Router();
 
 router.post(
   "/api/products/add",
+  adminAuth,
   upload.array("images"),
   [
     body("name").exists().withMessage("Product name must be provided"),
