@@ -1,9 +1,10 @@
 import express, { Request, Response } from "express";
-import { body, param, query, validationResult } from "express-validator";
+import { body, query, validationResult } from "express-validator";
 import { GenericError } from "../../errors/generic-error";
 import { handleToken } from "../../functions/handleToken";
 import { Cart } from "../../models/cart.model";
 import { RequestValidationError } from "../../errors/request-validation-error";
+import mongoose from "mongoose";
 
 const router = express.Router();
 
@@ -12,8 +13,9 @@ router.get(
   [
     query("token").exists().withMessage("A valid token must be provided"),
     body("userId")
-      .isLength({ min: 24, max: 24 })
-      .withMessage("A valid userId must be provided"),
+      .notEmpty()
+      .custom((value: string) => mongoose.Types.ObjectId.isValid(value))
+      .withMessage("A valid user ID must be provided"),
   ],
   async (req: Request, res: Response) => {
     const { token } = req.query;
