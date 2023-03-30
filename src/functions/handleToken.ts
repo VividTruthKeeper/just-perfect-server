@@ -21,6 +21,5 @@ export const handleToken = async (token: any): Promise<any> => {
   if (!(decodedToken instanceof Object)) {
     throw new TokenError();
   }
-  console.log(decodedToken);
   return decodedToken as IdecodedTokenType;
 };
