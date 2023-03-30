@@ -1,7 +1,7 @@
 import mongoose, { Document, Model, Schema } from "mongoose";
 import { IUserInput } from "./user.model";
 
-export interface CartItem {
+export interface CartItem extends Document {
   product: mongoose.Types.ObjectId;
   quantity: number;
   price: number;
