@@ -1,5 +1,6 @@
 import express, { Request, Response } from "express";
 import { body, validationResult } from "express-validator";
+import { adminAuth } from "../../middlewares/adminAuth";
 import { GenericError } from "../../errors/generic-error";
 import { RequestValidationError } from "../../errors/request-validation-error";
 import {
@@ -11,6 +12,7 @@ const router = express.Router();
 
 router.post(
   "/api/categories/add",
+  adminAuth,
   [body("name").exists().withMessage("Category name must be provided")],
   async (req: Request, res: Response) => {
     // req params error

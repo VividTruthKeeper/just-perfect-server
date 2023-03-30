@@ -2,12 +2,13 @@ import express, { Request, Response } from "express";
 import { body, validationResult, param } from "express-validator";
 import { updateCategory } from "../../services/category.service";
 import { RequestValidationError } from "../../errors/request-validation-error";
-// import { GenericError } from "../../errors/generic-error";
+import { adminAuth } from "../../middlewares/adminAuth";
 
 const router = express.Router();
 
 router.put(
   "/api/categories/update/:id",
+  adminAuth,
   [
     body("name")
       .isLength({ min: 3, max: 15 })

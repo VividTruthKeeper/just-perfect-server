@@ -3,11 +3,13 @@ import { param, validationResult } from "express-validator";
 import { deleteCategory } from "../../services/category.service";
 import { RequestValidationError } from "../../errors/request-validation-error";
 import { GenericError } from "../../errors/generic-error";
+import { adminAuth } from "../../middlewares/adminAuth";
 
 const router = express.Router();
 
 router.delete(
   "/api/categories/delete/:id",
+  adminAuth,
   [
     param("id")
       .isLength({ min: 24, max: 24 })
