@@ -39,8 +39,15 @@ router.post(
       throw new RequestValidationError(errors.array());
     }
 
-    const { firstName, lastName, email, password, address, paymentInfo } =
-      req.body;
+    const {
+      firstName,
+      lastName,
+      email,
+      password,
+      address,
+      paymentInfo,
+      adminPassword,
+    } = req.body;
     const sanitizedEmail: string = email.toLowerCase();
 
     if (
@@ -60,7 +67,11 @@ router.post(
       throw new GenericError("User already exists", 409);
     }
 
-    const token = await createToken(sanitizedEmail);
+    const isAdmin = adminPassword === process.env.ADMIN_PASSWORD;
+
+    const token = isAdmin
+      ? await createToken(sanitizedEmail, "admin")
+      : createToken(sanitizedEmail);
     const newUser = await createUser({
       email: sanitizedEmail,
       firstName,
