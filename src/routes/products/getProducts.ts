@@ -13,7 +13,6 @@ router.get("/api/products", async (req: Request, res: Response) => {
 
   const count = await Product.countDocuments();
   const totalPages = Math.ceil(count / ((perPage as any) * 1));
-
   const pagination = {
     count,
     totalPages,

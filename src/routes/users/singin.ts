@@ -27,15 +27,19 @@ router.post(
       throw new RequestValidationError(errors.array());
     }
     let updatedUser: IUserDocument | null = null;
-    const { email, password } = req.body;
+    const { email, password, adminPassword } = req.body;
     const sanitizedEmail: string = email.toLowerCase();
     const { passwordCorrect } = await loginUser({
       email: sanitizedEmail,
       password,
     });
 
+    const isAdmin = adminPassword === process.env.ADMIN_PASSWORD;
+
     if (passwordCorrect) {
-      const token: string = await createToken(sanitizedEmail);
+      const token: string = isAdmin
+        ? await createToken(sanitizedEmail, "admin")
+        : await createToken(sanitizedEmail);
       updatedUser = await assignToken(email, token);
 
       res.status(200).send({

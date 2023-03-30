@@ -43,8 +43,11 @@ export const loginUser = async ({
   return { passwordCorrect, user };
 };
 
-export const getAllUsers = async () => {
-  return User.find();
+export const getAllUsers = async (page: any, perPage: any) => {
+  return User.find()
+    .skip((page - 1) * perPage)
+    .limit(perPage * 1)
+    .exec();
 };
 export const deleteAllUsers = async () => {
   return User.deleteMany({});
