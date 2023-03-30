@@ -26,7 +26,7 @@ const commentSchema = new Schema(
     content: { type: String, required: true },
     rating: { type: Number, required: true },
   },
-  { timestamps: true }
+  { timestamps: true, strictQuery: false }
 );
 
 export const Comment = mongoose.model<IComment>("Comment", commentSchema);

@@ -32,7 +32,7 @@ const productSchema = new Schema(
     category: { type: Schema.Types.ObjectId, ref: "Category", required: true },
     __v: { type: Number, select: false },
   },
-  { timestamps: true }
+  { timestamps: true, strictQuery: false }
 );
 
 export default model<IProduct>("Product", productSchema);

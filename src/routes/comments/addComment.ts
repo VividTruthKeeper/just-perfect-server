@@ -32,61 +32,58 @@ router.post(
     const errors = validationResult(req);
     if (!errors.isEmpty()) throw new RequestValidationError(errors.array());
 
-    try {
-      const { productId } = req.params;
-      const { userId, content, rating } = req.body;
+    const { productId } = req.params;
+    const { userId, content, rating } = req.body;
 
-      // check if product exists
-      const product = await getProductById(productId);
-      if (!product) throw new GenericError("Product was not found", 404);
+    // check if product exists
+    const product = await getProductById(productId);
+    console.log(product);
+    if (!product) throw new GenericError("Product was not found", 404);
 
-      // check if user exists
-      const user = await findUser({ _id: userId });
+    // check if user exists
+    const user = await findUser({ _id: userId });
 
-      if (!user) throw new GenericError("User was not found", 404);
+    if (!user) throw new GenericError("User was not found", 404);
 
-      // Create new comment
-      const newComment = await addComment({
+    // Create new comment
+    const newComment = await addComment({
+      user: {
+        firstName: user.firstName,
+        lastName: user.lastName,
+        id: user._id,
+      },
+      productId,
+      content,
+      rating,
+    });
+    if (!newComment) throw new GenericError("Could not add comment", 500);
+
+    // update product
+    const updatedProduct = await modifyCommentInProduct(
+      productId,
+      {
         user: {
           firstName: user.firstName,
           lastName: user.lastName,
           id: user._id,
         },
-        productId,
         content,
         rating,
-      });
-      if (!newComment) throw new GenericError("Could not add comment", 500);
+      },
+      "ADD"
+    );
 
-      // update product
-      const updatedProduct = await modifyCommentInProduct(
-        productId,
-        {
-          user: {
-            firstName: user.firstName,
-            lastName: user.lastName,
-            id: user._id,
-          },
-          content,
-          rating,
-        },
-        "ADD"
-      );
-
-      // check if product was updated
-      if (!updatedProduct) {
-        // if not, delete a new comment
-        newComment.delete();
-        throw new GenericError("Failed to update product", 500);
-      }
-
-      res.status(201).send({
-        status: "success",
-        data: newComment,
-      });
-    } catch (error) {
-      console.log(error);
+    // check if product was updated
+    if (!updatedProduct) {
+      // if not, delete a new comment
+      newComment.delete();
+      throw new GenericError("Failed to update product", 500);
     }
+
+    res.status(201).send({
+      status: "success",
+      data: newComment,
+    });
   }
 );
 

@@ -50,7 +50,7 @@ const UserSchema: Schema = new Schema<IUserInput>(
     },
     __v: { type: Number, select: false },
   },
-  { timestamps: true }
+  { timestamps: true, strictQuery: false }
 );
 
 UserSchema.index({ email: 1 });

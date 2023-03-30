@@ -16,7 +16,7 @@ const categorySchema = new Schema(
     products: [{ type: Schema.Types.ObjectId, ref: "Product" }],
     __v: { type: Number, select: false },
   },
-  { timestamps: true }
+  { timestamps: true, strictQuery: false }
 );
 
 export default model<ICategory>("Category", categorySchema);

@@ -4,12 +4,7 @@ import { RequestValidationError } from "../../errors/request-validation-error";
 import { addProduct, deleteImages } from "../../services/product.service";
 import { upload } from "../../middlewares/upload";
 import { GenericError } from "../../errors/generic-error";
-import {
-  getCategoryById,
-  modifyProductInCategory,
-} from "../../services/category.service";
-import fs from "fs";
-import path from "path";
+import { modifyProductInCategory } from "../../services/category.service";
 
 const router = express.Router();
 
