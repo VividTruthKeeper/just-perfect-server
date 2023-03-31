@@ -100,6 +100,7 @@ const start = async (): Promise<void> => {
   });
 
   app.use(errorHandler);
+
   const port: string = process.env.API_PORT || "5000";
   app.listen(port, () => console.log(`Listening on ${port}`));
 };
