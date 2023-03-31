@@ -50,6 +50,7 @@ const getComments_1 = require("./src/routes/comments/getComments");
 const getCart_1 = require("./src/routes/cart/getCart");
 const addItemtoCart_1 = require("./src/routes/cart/addItemtoCart");
 const clearCart_1 = require("./src/routes/cart/clearCart");
+const baseRouter_1 = require("./src/routes/baseRouter");
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use((0, cors_1.default)());
@@ -81,6 +82,8 @@ const start = () => __awaiter(void 0, void 0, void 0, function* () {
     app.use(getCart_1.getCartRouter);
     app.use(addItemtoCart_1.addItemtoCartRouter);
     app.use(clearCart_1.clearCartRouter);
+    // Base
+    app.use(baseRouter_1.baseRouter);
     // connect to db
     try {
         yield (0, db_1.setupDB)();
