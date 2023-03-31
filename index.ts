@@ -45,6 +45,7 @@ import { getCommentsRouter } from "./src/routes/comments/getComments";
 import { getCartRouter } from "./src/routes/cart/getCart";
 import { addItemtoCartRouter } from "./src/routes/cart/addItemtoCart";
 import { clearCartRouter } from "./src/routes/cart/clearCart";
+import { baseRouter } from "./src/routes/baseRouter";
 
 const app = express();
 app.use(express.json());
@@ -83,6 +84,9 @@ const start = async (): Promise<void> => {
   app.use(getCartRouter);
   app.use(addItemtoCartRouter);
   app.use(clearCartRouter);
+
+  // Base
+  app.use(baseRouter);
 
   // connect to db
   try {
