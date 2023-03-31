@@ -6,7 +6,7 @@ import { GenericError } from "../../errors/generic-error";
 const router = express.Router();
 
 router.get("/api/products", async (req: Request, res: Response) => {
-  const { page = 1, perPage = 10 } = req.query;
+  const { page = 1, perPage = 10 } = req.query as { page: any; perPage: any };
 
   if (page < 1 || perPage < 1)
     throw new GenericError("page and perPage must be at least 1", 400);
