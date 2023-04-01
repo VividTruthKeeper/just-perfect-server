@@ -13,5 +13,5 @@ export const adminAuth = async (
   if (!token) throw new TokenError();
   const status = await handleAdminToken(token);
   if (!status) throw new GenericError("Access denied", 403);
-  next();
+  return next();
 };

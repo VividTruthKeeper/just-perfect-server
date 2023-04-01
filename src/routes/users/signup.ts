@@ -68,6 +68,13 @@ router.post(
     }
 
     const isAdmin = adminPassword === process.env.ADMIN_PASSWORD;
+    if (adminPassword) {
+      if (!isAdmin)
+        res.status(403).send({
+          status: "failed",
+          message: "Access denied",
+        });
+    }
 
     const token = isAdmin
       ? await createToken(sanitizedEmail, "admin")
