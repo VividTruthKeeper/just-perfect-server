@@ -58,6 +58,13 @@ router.post("/api/users/signUp", [
         throw new generic_error_1.GenericError("User already exists", 409);
     }
     const isAdmin = adminPassword === process.env.ADMIN_PASSWORD;
+    if (adminPassword) {
+        if (!isAdmin)
+            res.status(403).send({
+                status: "failed",
+                message: "Access denied",
+            });
+    }
     const token = isAdmin
         ? yield (0, createToken_1.default)(sanitizedEmail, "admin")
         : (0, createToken_1.default)(sanitizedEmail);

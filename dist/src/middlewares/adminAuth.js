@@ -20,7 +20,7 @@ const adminAuth = (req, res, next) => __awaiter(void 0, void 0, void 0, function
     const status = yield (0, handleAdminToken_1.handleAdminToken)(token);
     if (!status)
         throw new generic_error_1.GenericError("Access denied", 403);
-    next();
+    return next();
 });
 exports.adminAuth = adminAuth;
 //# sourceMappingURL=adminAuth.js.map

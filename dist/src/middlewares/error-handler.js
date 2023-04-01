@@ -7,9 +7,12 @@ const errorHandler = (err, req, res, next) => {
     if (err instanceof custom_error_1.CustomError) {
         return res.status(err.statusCode).send({ errors: err.serializeErrors() });
     }
-    res.status(400).send({
-        errors: [{ message: "Something went wrong" }],
-    });
+    if (!res.statusCode)
+        return next();
+    else
+        res.status(400).send({
+            errors: [{ message: "Something went wrong" }],
+        });
 };
 exports.errorHandler = errorHandler;
 //# sourceMappingURL=error-handler.js.map

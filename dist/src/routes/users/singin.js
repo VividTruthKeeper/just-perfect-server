@@ -39,6 +39,14 @@ router.post("/api/users/signIn", [(0, express_validator_1.body)("email").isEmail
         password,
     });
     const isAdmin = adminPassword === process.env.ADMIN_PASSWORD;
+    if (adminPassword) {
+        if (!isAdmin)
+            res.status(403).send({
+                errors: [
+                    { message: "Access denied", reason: "Wrong admin password" },
+                ],
+            });
+    }
     if (passwordCorrect) {
         const token = isAdmin
             ? yield (0, createToken_1.default)(sanitizedEmail, "admin")
